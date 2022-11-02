@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 
-const baseURL = 'https://flashcards-server-api.herokuapp.com'
+const baseURL = 'http://127.0.0.1:8000'
 
 const http: AxiosInstance = axios.create({
   baseURL,
