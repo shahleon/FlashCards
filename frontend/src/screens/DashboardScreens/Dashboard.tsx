@@ -182,6 +182,25 @@ const Dashboard = () => {
                           <Link to={`/deck/${id}/practice`}>
                             <h5>{title}</h5>
                           </Link>
+                          <div>
+                            {
+                                visibility === "private" ? (
+                                    <>
+                                      <button className="btn btn-sm text-dark" onClick={showModal}>
+                                        <i className="lni lni-users"></i> Invite
+                                      </button>
+                                      <Modal title="Invite Friends" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                        <Search
+                                          placeholder="input email"
+                                          enterButton="Invite"
+                                          size="large"
+                                          onSearch={value => handleInviteFriend(id, value)}
+                                        />
+                                      </Modal>
+                                    </>
+                                ) : ("")
+                            }
+                          </div>
                           <div className="d-flex gap-2 visibility-status align-items-center">
                             {visibility === "public" ? (
                               <i className="lni lni-world"></i>
@@ -190,25 +209,6 @@ const Dashboard = () => {
                             ) : null}{" "}
                             {visibility}
                           </div>
-                        </div>
-                        <div className="col d-flex justify-content-end">
-                            {
-                            visibility === "private" ? (
-                                <>
-                                  <button className="btn text-primary" onClick={showModal}>
-                                    <i className="lni lni-users"></i> Update
-                                  </button>
-                                  <Modal title="Invite Friends" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                    <Search
-                                      placeholder="input email"
-                                      enterButton="Invite"
-                                      size="large"
-                                      onSearch={value => handleInviteFriend(id, value)}
-                                    />
-                                  </Modal>
-                                </>
-                            ) : ("")
-                            }
                         </div>
                         <p className="description">{description}</p>
                         <p className="items-count">{cards_count} item(s)</p>

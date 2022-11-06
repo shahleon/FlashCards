@@ -141,9 +141,18 @@ def invite(id):
             if user is None:
                 raise Exception
             user = user.val()
+            user_id = user["userId"]
+            user_decks = db.child("deck_invitees")\
+                .order_by_child("deckId").equal_to(id)\
+                .order_by_child("userId").equal_to(user_id)\
+                .limit_to_first(1).get()
+            for user_deck in user_decks:
+                user_deck = user_deck.val()
+                if user_deck["deckId"] == id and user_deck["userId"] == user_id:
+                    return jsonify(), 201
             db.child("deck_invitees").push({
                 "deckId": id,
-                "userId": user["userId"]
+                "userId": user_id
             })
 
         return jsonify(), 201
