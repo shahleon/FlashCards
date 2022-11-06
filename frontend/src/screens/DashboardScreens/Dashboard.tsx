@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import { Card, Popconfirm } from "antd";
+import { Card, Popconfirm, Modal, Input } from "antd";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import EmptyImg from "assets/images/empty.svg";
@@ -42,6 +42,8 @@ interface Deck {
 const Dashboard = () => {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [fetchingDecks, setFetchingDecks] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { Search } = Input;
 
   const flashCardUser = window.localStorage.getItem("flashCardUser");
   const { localId } = (flashCardUser && JSON.parse(flashCardUser)) || {};
@@ -49,6 +51,18 @@ const Dashboard = () => {
   useEffect(() => {
     fetchDecks();
   }, []);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const fetchDecks = async () => {
     setFetchingDecks(true);
@@ -66,6 +80,31 @@ const Dashboard = () => {
         setDecks([]);
         setFetchingDecks(false);
       });
+  };
+
+  const handleInviteFriend = async(id: any, email: any) => {
+    const payload = {
+      email: email
+    };
+    await http
+        .post(`/deck/invite/${id}`, payload)
+        .then((res) => {
+            const { id } = res.data;
+            Swal.fire({
+              icon: 'success',
+              title: 'Invited Friend Successfully!',
+              text: 'You have successfully invited a friend',
+              confirmButtonColor: '#221daf',
+            })
+        })
+        .catch((err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Could Not Invite Friend!',
+              text: 'An error occurred, please try again',
+              confirmButtonColor: '#221daf',
+            })
+        });
   };
 
   const handleDeleteDeck = async(id: any) => {
@@ -151,6 +190,25 @@ const Dashboard = () => {
                             ) : null}{" "}
                             {visibility}
                           </div>
+                        </div>
+                        <div className="col d-flex justify-content-end">
+                            {
+                            visibility === "private" ? (
+                                <>
+                                  <button className="btn text-primary" onClick={showModal}>
+                                    <i className="lni lni-users"></i> Update
+                                  </button>
+                                  <Modal title="Invite Friends" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                    <Search
+                                      placeholder="input email"
+                                      enterButton="Invite"
+                                      size="large"
+                                      onSearch={value => handleInviteFriend(id, value)}
+                                    />
+                                  </Modal>
+                                </>
+                            ) : ("")
+                            }
                         </div>
                         <p className="description">{description}</p>
                         <p className="items-count">{cards_count} item(s)</p>

@@ -130,6 +130,29 @@ def create():
         ), 400
 
 
+@deck_bp.route('/deck/invite/<id>', methods = ['POST'])
+@cross_origin(supports_credentials=True)
+def invite(id):
+    try:
+        data = request.get_json()
+        invitee = data['email']
+        users = db.child("users").order_by_child("email").equal_to(invitee).limit_to_first(1).get()
+        for user in users:
+            if user is None:
+                raise Exception
+            user = user.val()
+            db.child("deck_invitees").push({
+                "deckId": id,
+                "userId": user["userId"]
+            })
+
+        return jsonify(), 201
+    except Exception as e:
+        return jsonify(
+            message=f'Inviting friend failed {e}',
+            status=400
+        ), 400
+
 @deck_bp.route('/deck/update/<id>', methods = ['PATCH'])
 @cross_origin(supports_credentials=True)
 def update(id):

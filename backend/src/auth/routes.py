@@ -35,6 +35,7 @@ auth_bp = Blueprint(
 )
 
 auth = firebase.auth()
+db = firebase.database()
 
 @auth_bp.route('/', methods=['GET'])
 @cross_origin(supports_credentials=True)
@@ -51,6 +52,9 @@ def signup():
         password = data['password']
     
         user = auth.create_user_with_email_and_password(email, password)
+        db.child("users").push({
+            "userId": user["localId"], "email": email
+        })
         '''if the registration process is successful, this message is displayed'''
         return jsonify(
             user = user,                            
