@@ -73,7 +73,19 @@ def getdecks():
                 cards = db.child("card").order_by_child("deckId").equal_to(deck.key()).get()
                 obj['cards_count'] = len(cards.val())
                 decks.append(obj)
-                
+
+            shared_decks = db.child("deck_invitees").order_by_child("userId").equal_to(localId).get()
+            for shared_deck in shared_decks.each():
+                shared_deck = shared_deck.val()
+                deck = db.child("deck").child(shared_deck["deckId"]).get()
+                deck_id = deck.key()
+                deck = deck.val()
+                deck['id'] = deck_id
+                cards = db.child("card").order_by_child("deckId").equal_to(deck_id).get()
+                deck['cards_count'] = len(cards.val())
+                deck['is_owner'] = False
+                decks.append(deck)
+
             return jsonify(
                 decks = decks,
                 message = 'Fetching decks successfully',
@@ -146,10 +158,11 @@ def invite(id):
                 .order_by_child("deckId").equal_to(id)\
                 .order_by_child("userId").equal_to(user_id)\
                 .limit_to_first(1).get()
-            for user_deck in user_decks:
-                user_deck = user_deck.val()
-                if user_deck["deckId"] == id and user_deck["userId"] == user_id:
-                    return jsonify(), 201
+            if user_decks.val() is not None:
+                for user_deck in user_decks.each():
+                    user_deck = user_deck.val()
+                    if user_deck["deckId"] == id and user_deck["userId"] == user_id:
+                        return jsonify(), 201
             db.child("deck_invitees").push({
                 "deckId": id,
                 "userId": user_id
