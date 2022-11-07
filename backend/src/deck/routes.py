@@ -70,6 +70,7 @@ def getdecks():
             for deck in user_decks.each():
                 obj = deck.val()
                 obj['id'] = deck.key()
+                obj['is_owner'] = True
                 cards = db.child("card").order_by_child("deckId").equal_to(deck.key()).get()
                 obj['cards_count'] = len(cards.val())
                 decks.append(obj)
@@ -81,6 +82,7 @@ def getdecks():
                 deck_id = deck.key()
                 deck = deck.val()
                 deck['id'] = deck_id
+                deck['is_owner'] = False
                 cards = db.child("card").order_by_child("deckId").equal_to(deck_id).get()
                 deck['cards_count'] = len(cards.val())
                 deck['is_owner'] = False
@@ -98,6 +100,7 @@ def getdecks():
             for deck in alldecks.each():
                 obj = deck.val()
                 obj['id'] = deck.key()
+                obj['is_owner'] = False
                 cards = db.child("card").order_by_child("deckId").equal_to(deck.key()).get()
                 obj['cards_count'] = len(cards.val())
                 decks.append(obj)

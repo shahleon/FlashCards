@@ -37,6 +37,7 @@ interface Deck {
   description: string;
   visibility: string;
   cards_count: number;
+  is_owner: boolean;
 }
 
 const Dashboard = () => {
@@ -174,7 +175,7 @@ const Dashboard = () => {
               </div>
             ) : (
               decks.map(
-                ({ id, title, description, visibility, cards_count }, index) => {
+                ({ id, title, description, visibility, cards_count, is_owner }, index) => {
                   return (
                     <div className="col-md-4">
                       <div className="flash-card__item">
@@ -184,7 +185,7 @@ const Dashboard = () => {
                           </Link>
                           <div>
                             {
-                                visibility === "private" ? (
+                                visibility === "private" && is_owner == true ? (
                                     <>
                                       <button className="btn btn-sm text-dark" onClick={showModal}>
                                         <i className="lni lni-users"></i> Invite
@@ -222,23 +223,31 @@ const Dashboard = () => {
                             </Link>
                           </div>
                           <div className="col d-flex justify-content-center">
-                            <Link to={`/deck/${id}/update`}>
-                              <button className="btn text-edit">
-                                <i className="lni lni-pencil-alt"></i> Update
-                              </button>
-                            </Link>
+                            {
+                                is_owner === true ? (
+                                  <Link to={`/deck/${id}/update`}>
+                                      <button className="btn text-edit">
+                                        <i className="lni lni-pencil-alt"></i> Update
+                                      </button>
+                                  </Link>
+                                ): null
+                            }
                           </div>
                           <div className="col d-flex justify-content-end">
-                            <Popconfirm
-                              title="Are you sure to delete this task?"
-                              onConfirm={() => handleDeleteDeck(id)}
-                              okText="Yes"
-                              cancelText="No"
-                            >
-                              <button className="btn text-danger">
-                                <i className="lni lni-trash-can"></i> Delete
-                              </button>
-                            </Popconfirm>
+                          {
+                                is_owner === true ? (
+                                  <Popconfirm
+                                      title="Are you sure to delete this task?"
+                                      onConfirm={() => handleDeleteDeck(id)}
+                                      okText="Yes"
+                                      cancelText="No"
+                                    >
+                                      <button className="btn text-danger">
+                                        <i className="lni lni-trash-can"></i> Delete
+                                      </button>
+                                  </Popconfirm>
+                                ): null
+                            }
                           </div>
                         </div>
                       </div>
