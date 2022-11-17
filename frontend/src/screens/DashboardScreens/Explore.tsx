@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
 import { PropagateLoader } from "react-spinners";
 import http from "utils/api";
 import "./styles.scss";
+import ReactPaginate from 'react-paginate';
 
 interface Deck {
   id: string;
@@ -64,6 +65,23 @@ const Explore = () => {
       });
   };
 
+  const [itemOffset, setItemOffset] = useState(0);
+  const endOffset = itemOffset + 9;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentDecks = decks.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(decks.length / 9);
+
+  console.log(currentDecks)
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: { selected: number; }) => {
+    const newOffset = (event.selected * 9) % decks.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <div className="explore-page dashboard-commons">
       <section>
@@ -97,7 +115,7 @@ const Explore = () => {
                 >
                   <PropagateLoader color="#221daf" />
                 </div>
-              ) : decks.length === 0 ? (
+              ) : currentDecks.length === 0 ? (
                 <div className="row justify-content-center empty-pane">
                   <div className="text-center">
                     <img className="img-fluid" src={EmptyImg} />
@@ -105,7 +123,7 @@ const Explore = () => {
                   </div>
                 </div>
               ) : (
-                decks
+                currentDecks
                   .filter((post) => {
                     if (query === "") {
                       return post;
@@ -141,10 +159,29 @@ const Explore = () => {
                     }
                   )
               )}
+              
             </div>
           </div>
         </div>
       </section>
+      <nav aria-label="Page navigation comments" className="mt-4">
+              <ReactPaginate 
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                containerClassName="pagination justify-content-center"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+            /></nav>
     </div>
   );
 };
