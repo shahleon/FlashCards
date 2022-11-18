@@ -81,14 +81,21 @@ def createcards(deckId):
                 "back": card['back'],
                 "hint": card['hint']
             })
+
+        deck = db.child("deck").child(deckId).get().val()
+        db.child("deck").child(deckId).update({
+            "userId": deck['userId'], "title": deck['title'],
+            "description": deck['description'], "visibility": deck['visibility'],
+            "cards_count": len(cards)
+        })
         
         return jsonify(
             message = 'Adding cards Successful',
             status = 201
         ), 201
-    except:
+    except Exception as e:
         return jsonify(
-            message = 'Adding cards Failed',
+            message = f'Adding cards Failed {e}',
             status = 400
         ), 400
 

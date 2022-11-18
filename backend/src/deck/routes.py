@@ -71,8 +71,6 @@ def getdecks():
                 obj = deck.val()
                 obj['id'] = deck.key()
                 obj['is_owner'] = True
-                cards = db.child("card").order_by_child("deckId").equal_to(deck.key()).get()
-                obj['cards_count'] = len(cards.val())
                 decks.append(obj)
 
             shared_decks = db.child("deck_invitees").order_by_child("userId").equal_to(localId).get()
@@ -83,8 +81,6 @@ def getdecks():
                 deck = deck.val()
                 deck['id'] = deck_id
                 deck['is_owner'] = False
-                cards = db.child("card").order_by_child("deckId").equal_to(deck_id).get()
-                deck['cards_count'] = len(cards.val())
                 deck['is_owner'] = False
                 decks.append(deck)
 
@@ -101,8 +97,6 @@ def getdecks():
                 obj = deck.val()
                 obj['id'] = deck.key()
                 obj['is_owner'] = False
-                cards = db.child("card").order_by_child("deckId").equal_to(deck.key()).get()
-                obj['cards_count'] = len(cards.val())
                 decks.append(obj)
                 
             return jsonify(
@@ -131,7 +125,7 @@ def create():
         visibility = data['visibility']
         
         db.child("deck").push({
-            "userId": localId, "title": title, "description": description, "visibility" : visibility
+            "userId": localId, "title": title, "description": description, "visibility" : visibility, "cards_count": 0
         })
         
         return jsonify(
