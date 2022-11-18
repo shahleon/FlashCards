@@ -25,6 +25,7 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.5",
+    "react-sweet-progress": "^1.1.2",
     "sass": "^1.55.0",
     "sweetalert2": "^11.4.37",
     "swiper": "^8.4.2",

@@ -29,6 +29,9 @@ import { PropagateLoader } from "react-spinners";
 import http from "utils/api";
 import "./styles.scss";
 import Swal from "sweetalert2";
+// @ts-ignore
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 
 interface Deck {
   id: string;
@@ -250,6 +253,7 @@ const Dashboard = () => {
                             }
                           </div>
                         </div>
+                        <Progress percent={88} status="success" />
                       </div>
                     </div>
                   );

@@ -172,6 +172,65 @@ def invite(id):
             status=400
         ), 400
 
+
+@deck_bp.route('/deck/progress/<deck_id>', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def save_progress(deck_id):
+    try:
+        data = request.get_json()
+        user_id = data['userId']
+        current_index = data['currentIndex']
+        deck_progress_list = db.child("deck_progress") \
+            .order_by_child("deckId").equal_to(deck_id).get()
+        for deck_progress in deck_progress_list.each():
+            current_deck = deck_progress.val()
+            if current_deck["userId"] == user_id:
+                key = deck_progress.key()
+                db.child("deck_progress").child(key).remove()
+                break
+
+        db.child("deck_progress").push({
+            "deckId": deck_id,
+            "userId": user_id,
+            "currentIndex": current_index
+        })
+
+        return jsonify(), 201
+    except Exception as e:
+        return jsonify(
+            message=f'Inviting friend failed {e}',
+            status=400
+        ), 400
+
+
+@deck_bp.route('/deck/progress/<deck_id>', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def get_progress(deck_id):
+    args = request.args
+    user_id = args and args['localId']
+    try:
+        deck_progress_list = db.child("deck_progress")\
+            .order_by_child("deckId").equal_to(deck_id).get()
+
+        deck_progress = None
+        for deck_progress in deck_progress_list.each():
+            current_progress = deck_progress.val()
+            if current_progress["userId"] == user_id:
+                deck_progress = current_progress
+                break
+
+        return jsonify(
+            deckProgress=deck_progress,
+            message='Fetched Deck Progress successfully',
+            status=200
+        ), 200
+    except Exception as e:
+        return jsonify(
+            message=f'Inviting friend failed {e}',
+            status=400
+        ), 400
+
+
 @deck_bp.route('/deck/update/<id>', methods = ['PATCH'])
 @cross_origin(supports_credentials=True)
 def update(id):

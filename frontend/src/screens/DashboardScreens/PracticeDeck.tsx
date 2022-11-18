@@ -67,6 +67,7 @@ const PracticeDeck = () => {
       .get(`/deck/${id}`)
       .then((res) => {
         const { deck: _deck } = res.data || {};
+        _deck.id = id;
         setDeck(_deck);
         setFetchingDeck(false);
       })
@@ -141,7 +142,7 @@ const PracticeDeck = () => {
                   </div>
                 </div>
               ) : (
-                <Flashcard cards={cards} />
+                <Flashcard deck={deck} cards={cards} />
               )}
             </div>
           </div>
