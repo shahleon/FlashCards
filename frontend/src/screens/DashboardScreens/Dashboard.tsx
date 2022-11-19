@@ -41,6 +41,7 @@ interface Deck {
   visibility: string;
   cards_count: number;
   is_owner: boolean;
+  progress: number
 }
 
 const Dashboard = () => {
@@ -178,7 +179,7 @@ const Dashboard = () => {
               </div>
             ) : (
               decks.map(
-                ({ id, title, description, visibility, cards_count, is_owner }, index) => {
+                ({ id, title, description, visibility, cards_count, is_owner, progress }, index) => {
                   return (
                     <div className="col-md-4">
                       <div className="flash-card__item">
@@ -253,7 +254,15 @@ const Dashboard = () => {
                             }
                           </div>
                         </div>
-                        <Progress percent={88} status="success" />
+                        <Progress
+                          percent={progress}
+                          theme={{
+                            success: {
+                              symbol: '🏄‍',
+                              color: 'rgb(245, 66, 155)'
+                            }
+                          }}
+                        />
                       </div>
                     </div>
                   );

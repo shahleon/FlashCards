@@ -71,6 +71,10 @@ def getdecks():
                 obj = deck.val()
                 obj['id'] = deck.key()
                 obj['is_owner'] = True
+                deck_progress = get_deck_progress(deck.key(), localId)
+                obj['progress'] = 0
+                if deck_progress is not None:
+                    obj['progress'] = int(100*(int(deck_progress['currentIndex']) + 1)/int(obj['cards_count']))
                 decks.append(obj)
 
             shared_decks = db.child("deck_invitees").order_by_child("userId").equal_to(localId).get()
@@ -81,7 +85,10 @@ def getdecks():
                 deck = deck.val()
                 deck['id'] = deck_id
                 deck['is_owner'] = False
-                deck['is_owner'] = False
+                deck_progress = get_deck_progress(deck.key(), localId)
+                deck['progress'] = 0
+                if deck_progress is not None:
+                    deck['progress'] = int(100*int(deck_progress['currentIndex'])/int(deck['cards_count']))
                 decks.append(deck)
 
             return jsonify(
@@ -110,7 +117,6 @@ def getdecks():
             message = f"An error occurred {e}",
             status = 400
         ), 400
-
 
 
 @deck_bp.route('/deck/create', methods = ['POST'])
@@ -180,14 +186,9 @@ def save_progress(deck_id):
         data = request.get_json()
         user_id = data['userId']
         current_index = data['currentIndex']
-        deck_progress_list = db.child("deck_progress") \
-            .order_by_child("deckId").equal_to(deck_id).get()
-        for deck_progress in deck_progress_list.each():
-            current_deck = deck_progress.val()
-            if current_deck["userId"] == user_id:
-                key = deck_progress.key()
-                db.child("deck_progress").child(key).remove()
-                break
+        deck_progress = get_deck_progress(deck_id, user_id)
+        if deck_progress is not None:
+            db.child("deck_progress").child(deck_progress["id"]).remove()
 
         db.child("deck_progress").push({
             "deckId": deck_id,
@@ -209,6 +210,21 @@ def get_progress(deck_id):
     args = request.args
     user_id = args and args['localId']
     try:
+        deck_progress = get_deck_progress(deck_id, user_id)
+        return jsonify(
+            deckProgress=deck_progress,
+            message='Fetched Deck Progress Successfully',
+            status=200
+        ), 200
+    except Exception as e:
+        return jsonify(
+            message=f'Failed to Get Deck Study Progress {e}',
+            status=400
+        ), 400
+
+
+def get_deck_progress(deck_id, user_id):
+    try:
         deck_progress_list = db.child("deck_progress")\
             .order_by_child("deckId").equal_to(deck_id).get()
 
@@ -216,20 +232,14 @@ def get_progress(deck_id):
         for deck_progress in deck_progress_list.each():
             current_progress = deck_progress.val()
             if current_progress["userId"] == user_id:
+                key = deck_progress.key()
                 deck_progress = current_progress
+                deck_progress["id"] = key
                 break
 
-        return jsonify(
-            deckProgress=deck_progress,
-            message='Fetched Deck Progress successfully',
-            status=200
-        ), 200
+        return deck_progress
     except Exception as e:
-        return jsonify(
-            message=f'Inviting friend failed {e}',
-            status=400
-        ), 400
-
+        raise e
 
 @deck_bp.route('/deck/update/<id>', methods = ['PATCH'])
 @cross_origin(supports_credentials=True)
