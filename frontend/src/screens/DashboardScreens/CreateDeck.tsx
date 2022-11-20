@@ -28,13 +28,45 @@ import http from "utils/api";
 import "./styles.scss";
 
 const CreateDeck = () => {
+
+  const emptyTag = {
+    content: '',
+  };
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [visibility, setVisibility] = useState('public');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [tags, setTags] = useState([emptyTag]);
 
   const flashCardUser = window.localStorage.getItem('flashCardUser');
   const { localId } = flashCardUser && JSON.parse(flashCardUser) || {};
+
+  const removeTag = (index: number) => {
+    const _tags = [...tags];
+    _tags.splice(index, 1);
+    setTags(_tags);
+  };
+
+  const addTag = () => {
+    const _tags = [...tags];
+    _tags.push(emptyTag);
+    setTags(_tags);
+  };
+
+  const handleTagUpdate = (index: number, propertyName: string, e: any) => {
+    e.preventDefault();
+    const value = e.target.value;
+    const _tags = [...tags];
+    const updatedTags = _tags.map((item, key) => {
+      if (index === key) {
+        return { ...item, [propertyName]: value };
+      }
+      return item;
+    });
+    setTags(updatedTags);
+  };
+
 
   const handleCreateDeck = async(e: any) => {
     e.preventDefault();
@@ -42,7 +74,8 @@ const CreateDeck = () => {
       title,
       description,
       visibility,
-      localId
+      localId,
+      tags
     };
     setIsSubmitting(true);
 
@@ -108,6 +141,50 @@ const CreateDeck = () => {
                         placeholder="Description"
                         required
                       />
+                    </div>
+                    {
+                      tags.map(({content}, index) => {
+                        return (
+                          <div className="col-md-12">
+                            <div className="flash-card-tag__content">
+                              <div className="d-flex header justify-content-between align-items-center">
+                                <span>Tag {index + 1}</span>
+                                <i
+                                  className="lni lni-trash-can"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => removeTag(index)}
+                                ></i>
+                              </div>
+                              <div className="row content">
+                                  <div className="form-group">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      value={content}
+                                      onChange={(e) =>
+                                        handleTagUpdate(index, "content", e)
+                                      }
+                                      placeholder="Optional"
+                                      required
+                                    />
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                    <div className="row justify-content-end">
+                      <div className="col-md-12 text-right">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          onClick={addTag}
+                        >
+                          <i className="lni lni-circle-plus mr-2"></i>
+                          <span className="">Add Tag</span>
+                        </button>
+                      </div>
                     </div>
                     <div className="visibility mt-4">
                       <Radio.Group className='d-flex justify-content-between' value={visibility} onChange={(e) => setVisibility(e.target.value)}>

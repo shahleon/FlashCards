@@ -29,6 +29,10 @@ import http from "utils/api";
 import "./styles.scss";
 import ReactPaginate from 'react-paginate';
 
+interface Tag {
+  content: string
+}
+
 interface Deck {
   id: string;
   userId: string;
@@ -36,6 +40,7 @@ interface Deck {
   description: string;
   visibility: string;
   cards_count: number;
+  tags: any;
 }
 
 const Explore = () => {
@@ -131,7 +136,8 @@ const Explore = () => {
                       post.title.toLowerCase().includes(query.toLowerCase()) ||
                       post.description
                         .toLowerCase()
-                        .includes(query.toLowerCase())
+                        .includes(query.toLowerCase()) ||
+                      (post.tags.some((element: Tag) => element.content.toLowerCase().includes(query.toLowerCase())))
                     ) {
                       return post;
                     }

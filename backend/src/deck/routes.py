@@ -75,6 +75,9 @@ def getdecks():
                 obj['progress'] = 0
                 if deck_progress is not None:
                     obj['progress'] = int(100*(int(deck_progress['currentIndex']) + 1)/int(obj['cards_count']))
+                if "tags" not in obj:
+                    obj["tags"] = []
+
                 decks.append(obj)
 
             shared_decks = db.child("deck_invitees").order_by_child("userId").equal_to(localId).get()
@@ -89,6 +92,8 @@ def getdecks():
                 deck['progress'] = 0
                 if deck_progress is not None:
                     deck['progress'] = int(100*int(deck_progress['currentIndex'])/int(deck['cards_count']))
+                if "tags" not in deck:
+                    deck["tags"] = []
                 decks.append(deck)
 
             return jsonify(
@@ -104,6 +109,8 @@ def getdecks():
                 obj = deck.val()
                 obj['id'] = deck.key()
                 obj['is_owner'] = False
+                if "tags" not in obj:
+                    obj["tags"] = []
                 decks.append(obj)
                 
             return jsonify(
@@ -129,10 +136,16 @@ def create():
         title = data['title']
         description = data['description']
         visibility = data['visibility']
+        tags = data['tags']
         
         db.child("deck").push({
-            "userId": localId, "title": title, "description": description, "visibility" : visibility, "cards_count": 0
+            "userId": localId, "title": title, "description": description, "visibility": visibility, "cards_count": 0, "tags": tags
         })
+
+        # for tag in tags:
+        #     db.child("deck").child("tags").push({
+        #        "title": tag
+        #     })
         
         return jsonify(
             message = 'Create Deck Successful',
@@ -251,11 +264,12 @@ def update(id):
         title = data['title']
         description = data['description']
         visibility = data['visibility']
-        
+        tags = data['tags']
+
         db.child("deck").child(id).update({
-            "userId": localId, "title": title, "description": description, "visibility" : visibility
+            "userId": localId, "title": title, "description": description, "visibility" : visibility, "tags": tags
         })
-        
+
         return jsonify(
             message = 'Update Deck Successful',
             status = 201

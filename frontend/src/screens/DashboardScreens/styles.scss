@@ -211,6 +211,35 @@
         color: #221daf;
     }
 
+    .flash-card-tag__content {
+        border-radius: 8px;
+        background-color: #fff;
+        margin-bottom: 30px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+        .header {
+            background: #3465a4;
+            padding: 10px 30px;
+            border-radius: 8px 8px 0px 0px;
+            border-bottom: 2px solid #dddddd;
+            span, i {
+                font-size: 20px;
+                color: #fff;
+                margin-bottom: 0px;
+            }
+            span {
+                font-weight: 600;
+            }
+        }
+        .content {
+            padding: 10px 30px;
+        }
+
+        label {
+            color: #000;
+        }
+    }
+
     .flash-card__content {
         border-radius: 8px;
         background-color: #fff;
