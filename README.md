@@ -119,5 +119,8 @@ Email any queries to the contributors -
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
+## Acknowledgement
+This work is based on https://github.com/JohnDamilola/FlashCards and is an extension of the project. This is part of coursework for NCState CS510 course. 
+
 ## Funding
 Our project at the moment is not funded by any organization/individual.
