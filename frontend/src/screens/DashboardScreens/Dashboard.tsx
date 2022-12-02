@@ -255,7 +255,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                         <Progress
-                          percent={progress}
+                          percent={Math.min(progress, 100)}
                           theme={{
                             success: {
                               symbol: '🏄‍',
