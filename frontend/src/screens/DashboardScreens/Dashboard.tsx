@@ -22,15 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import { Card, Popconfirm, Modal, Input } from "antd";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { JSXElementConstructor, ReactElement, ReactFragment, ReactPortal, useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import EmptyImg from "assets/images/empty.svg";
-import { PropagateLoader } from "react-spinners";
+import {PropagateLoader} from "react-spinners";
 import http from "utils/api";
 import "./styles.scss";
 import Swal from "sweetalert2";
 // @ts-ignore
-import { Progress } from 'react-sweet-progress';
+import {Progress} from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 
 interface Deck {
@@ -41,17 +41,18 @@ interface Deck {
   visibility: string;
   cards_count: number;
   is_owner: boolean;
-  progress: number
+  progress: number;
+  tags: any
 }
 
 const Dashboard = () => {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [fetchingDecks, setFetchingDecks] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { Search } = Input;
+  const {Search} = Input;
 
   const flashCardUser = window.localStorage.getItem("flashCardUser");
-  const { localId } = (flashCardUser && JSON.parse(flashCardUser)) || {};
+  const {localId} = (flashCardUser && JSON.parse(flashCardUser)) || {};
 
   useEffect(() => {
     fetchDecks();
@@ -71,152 +72,156 @@ const Dashboard = () => {
 
   const fetchDecks = async () => {
     setFetchingDecks(true);
-    const params = { localId };
+    const params = {localId};
     await http
-      .get("/deck/all", {
-        params,
-      })
-      .then((res) => {
-        const { decks: _decks } = res.data || {};
-        setDecks(_decks);
-        setFetchingDecks(false);
-      })
-      .catch((err) => {
-        setDecks([]);
-        setFetchingDecks(false);
-      });
+        .get("/deck/all", {
+          params,
+        })
+        .then((res) => {
+          const {decks: _decks} = res.data || {};
+          setDecks(_decks);
+          setFetchingDecks(false);
+        })
+        .catch((err) => {
+          setDecks([]);
+          setFetchingDecks(false);
+        });
   };
 
-  const handleInviteFriend = async(id: any, email: any) => {
+  const handleInviteFriend = async (id: any, email: any) => {
     const payload = {
       email: email
     };
     await http
         .post(`/deck/invite/${id}`, payload)
         .then((res) => {
-            const { id } = res.data;
-            Swal.fire({
-              icon: 'success',
-              title: 'Invited Friend Successfully!',
-              text: 'You have successfully invited a friend',
-              confirmButtonColor: '#221daf',
-            })
+          const {id} = res.data;
+          Swal.fire({
+            icon: 'success',
+            title: 'Invited Friend Successfully!',
+            text: 'You have successfully invited a friend',
+            confirmButtonColor: '#221daf',
+          })
         })
         .catch((err) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Could Not Invite Friend!',
-              text: 'An error occurred, please try again',
-              confirmButtonColor: '#221daf',
-            })
+          Swal.fire({
+            icon: 'error',
+            title: 'Could Not Invite Friend!',
+            text: 'An error occurred, please try again',
+            confirmButtonColor: '#221daf',
+          })
         });
   };
 
-  const handleDeleteDeck = async(id: any) => {
+  const handleDeleteDeck = async (id: any) => {
 
     await http
-      .delete(`/deck/delete/${id}`)
-      .then((res) => {
-        const { id } = res.data;
-        Swal.fire({
-          icon: 'success',
-          title: 'Deck Deleted Successfully!',
-          text: 'You have successfully deleted a deck',
-          confirmButtonColor: '#221daf',
-        }).then(() => {
-          window.location.replace(`/dashboard`);
+        .delete(`/deck/delete/${id}`)
+        .then((res) => {
+          const {id} = res.data;
+          Swal.fire({
+            icon: 'success',
+            title: 'Deck Deleted Successfully!',
+            text: 'You have successfully deleted a deck',
+            confirmButtonColor: '#221daf',
+          }).then(() => {
+            window.location.replace(`/dashboard`);
+          })
         })
-      })
-      .catch((err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Deck Deletion Failed!',
-          text: 'An error occurred, please try again',
-          confirmButtonColor: '#221daf',
-        })
-      });
+        .catch((err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Deck Deletion Failed!',
+            text: 'An error occurred, please try again',
+            confirmButtonColor: '#221daf',
+          })
+        });
   };
 
   return (
-    <div className="dashboard-page dashboard-commons">
-      <section>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <Card className="welcome-card border-[#E7EAED]">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3>
-                      <b>Hey, Welcome Back!</b> 👋
-                    </h3>
-                    <p className="">
-                      Let's start creating, memorizing and sharing your
-                      flashcards.
-                    </p>
+      <div className="dashboard-page dashboard-commons">
+        <section>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <Card className="welcome-card border-[#E7EAED]">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3>
+                        <b>Hey, Welcome Back!</b> 👋
+                      </h3>
+                      <p className="">
+                        Let's start creating, memorizing and sharing your
+                        flashcards.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </div>
             </div>
-          </div>
 
-          <div className="flash-card__list row mt-4">
-            <div className="col-md-12">
-              <p className="title">Your Library</p>
-            </div>
-            {fetchingDecks ? (
-              <div
-                className="col-md-12 text-center d-flex justify-content-center align-items-center"
-                style={{ height: "300px" }}
-              >
-                <PropagateLoader color="#221daf" />
+            <div className="flash-card__list row mt-4">
+              <div className="col-md-12">
+                <p className="title">Your Library</p>
               </div>
-            ) : decks.length === 0 ? (
-              <div className="row justify-content-center empty-pane">
-                <div className="text-center">
-                  <img className="img-fluid" src={EmptyImg} />
-                  <p>No Study Deck Created Yet</p>
-                </div>
-              </div>
-            ) : (
-              decks.map(
-                ({ id, title, description, visibility, cards_count, is_owner, progress }, index) => {
-                  return (
-                    <div className="col-md-4">
-                      <div className="flash-card__item">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <Link to={`/deck/${id}/practice`}>
-                            <h5>{title}</h5>
-                          </Link>
-                          <div>
-                            {
-                                visibility === "private" && is_owner == true ? (
-                                    <>
-                                      <button className="btn btn-sm text-dark" onClick={showModal}>
-                                        <i className="lni lni-users"></i> Invite
-                                      </button>
-                                      <Modal title="Invite Friends" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                        <Search
-                                          placeholder="input email"
-                                          enterButton="Invite"
-                                          size="large"
-                                          onSearch={value => handleInviteFriend(id, value)}
-                                        />
-                                      </Modal>
-                                    </>
-                                ) : ("")
-                            }
-                          </div>
-                          <div className="d-flex gap-2 visibility-status align-items-center">
-                            {visibility === "public" ? (
-                              <i className="lni lni-world"></i>
-                            ) : visibility === "private" ? (
-                              <i className="lni lni-lock-alt"></i>
-                            ) : null}{" "}
-                            {visibility}
-                          </div>
-                        </div>
-                        <p className="description">{description}</p>
-                        <p className="items-count">{cards_count} item(s)</p>
+              {fetchingDecks ? (
+                  <div
+                      className="col-md-12 text-center d-flex justify-content-center align-items-center"
+                      style={{height: "300px"}}
+                  >
+                    <PropagateLoader color="#221daf"/>
+                  </div>
+              ) : decks.length === 0 ? (
+                  <div className="row justify-content-center empty-pane">
+                    <div className="text-center">
+                      <img className="img-fluid" src={EmptyImg}/>
+                      <p>No Study Deck Created Yet</p>
+                    </div>
+                  </div>
+              ) : (
+                  decks.map(
+                      ({id, title, description, visibility, cards_count, is_owner, progress, tags}, index) => {
+                        return (
+                            <div className="col-md-4">
+                              <div className="flash-card__item">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <Link to={`/deck/${id}/practice`}>
+                                    <h5>{title}</h5>
+                                  </Link>
+                                  <div>
+                                    {
+                                      visibility === "private" && is_owner == true ? (
+                                          <>
+                                            <button className="btn btn-sm text-dark" onClick={showModal}>
+                                              <i className="lni lni-users"></i> Invite
+                                            </button>
+                                            <Modal title="Invite Friends" open={isModalOpen} onOk={handleOk}
+                                                   onCancel={handleCancel}>
+                                              <Search
+                                                  placeholder="input email"
+                                                  enterButton="Invite"
+                                                  size="large"
+                                                  onSearch={value => handleInviteFriend(id, value)}
+                                              />
+                                            </Modal>
+                                          </>
+                                      ) : ("")
+                                    }
+                                  </div>
+                                  <div className="d-flex gap-2 visibility-status align-items-center">
+                                    {visibility === "public" ? (
+                                        <i className="lni lni-world"></i>
+                                    ) : visibility === "private" ? (
+                                        <i className="lni lni-lock-alt"></i>
+                                    ) : null}{" "}
+                                    {visibility}
+                                  </div>
+                                </div>
+                                <p className="description">{description}</p>
+                                <p className="items-count">{cards_count} item(s)</p>
+                                <p className="parent-tag">
+                                  Tags: {tags.map((tag: { content: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => <h6 className="child-tag">{tag.content}</h6>)}
+                                </p>
 
                         <div className="d-flex menu">
                           <div className="col">

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import EmptyImg from "assets/images/empty.svg";
-import React, { useEffect, useState } from "react";
+import React, {JSXElementConstructor, ReactElement, ReactFragment, ReactPortal, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import { PropagateLoader } from "react-spinners";
 import http from "utils/api";
@@ -143,7 +143,7 @@ const Explore = () => {
                     }
                   })
                   .map(
-                    ({ id, title, description, visibility, cards_count }, index) => {
+                    ({ id, title, description, visibility, cards_count, tags }, index) => {
                       return (
                         <div className="col-md-4">
                           <Link to={`/deck/${id}/practice`}>
@@ -158,6 +158,9 @@ const Explore = () => {
                               </div>
                               <p className="description">{description}</p>
                               <p className="items-count">{cards_count} item(s)</p>
+                              <p className="parent-tag">
+                                  Tags: {tags.map((tag: { content: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }) => <h6 className="child-tag">{tag.content}</h6>)}
+                              </p>
                             </div>
                           </Link>
                         </div>

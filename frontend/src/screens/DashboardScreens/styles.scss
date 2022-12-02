@@ -15,6 +15,11 @@
             cursor: default;
             border-radius: 8px;
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            h6 {
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: #3465a4;
+            }
             h5 {
                 margin-bottom: 8px;
                 font-weight: 600;
@@ -65,6 +70,17 @@
                     align-items: center;
                     gap: 7px;
                 }
+            }
+            .parent-tag {
+                width: 100%;
+                height: 50px;
+                white-space: nowrap;
+                overflow-x: auto;
+            }
+            .child-tag {
+                display: inline-block;
+                width: 10%;
+                height: 10%;
             }
         }
     }
