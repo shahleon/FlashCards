@@ -192,6 +192,42 @@ def invite(id):
         ), 400
 
 
+@deck_bp.route('/deck/<deck_id>/add-to-my-collection', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def add_deck_to_collection(deck_id):
+    try:
+        data = request.get_json()
+        localId = data['localId']
+        deck = db.child("deck").child(deck_id).get()
+        if deck:
+            deck_val = deck.val()
+            new_deck = db.child("deck").push({
+                "userId": localId, "title": deck_val.get("title", "deck title"),
+                "description": deck_val.get("description", "description"),
+                "visibility": "private",
+                "cards_count": deck_val.get("cards_count", 0),
+                "tags": deck_val.get("tags", {})
+            })
+            deck_cards = db.child("card").order_by_child("deckId").equal_to(deck_id).get()
+            cards = [card.val() for card in deck_cards.each()]
+            for card in cards:
+                db.child("card").push({
+                    "userId": localId,
+                    "deckId": new_deck['name'],
+                    "front": card['front'],
+                    "back": card['back'],
+                    "hint": card['hint']
+                })
+
+        return jsonify(), 201
+
+    except Exception as e:
+        return jsonify(
+            message=f'Adding to collection failed {e}',
+            status=400
+        ), 400
+
+
 @deck_bp.route('/deck/progress/<deck_id>', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def save_progress(deck_id):
@@ -253,6 +289,7 @@ def get_deck_progress(deck_id, user_id):
         return deck_progress
     except Exception as e:
         raise e
+
 
 @deck_bp.route('/deck/update/<id>', methods = ['PATCH'])
 @cross_origin(supports_credentials=True)

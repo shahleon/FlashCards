@@ -28,6 +28,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { PropagateLoader } from "react-spinners";
 import EmptyImg from "assets/images/empty.svg";
 import http from "utils/api";
+import Swal from "sweetalert2";
 import "./styles.scss";
 
 interface Deck {
@@ -90,6 +91,28 @@ const PracticeDeck = () => {
       });
   };
 
+  const handleAddToMyCollection = async() => {
+    const payload = { localId };
+    await http
+        .post(`/deck/${id}/add-to-my-collection`, payload)
+        .then((res) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Successful!',
+              text: 'Deck Added to Your Collection Successfully',
+              confirmButtonColor: '#221daf',
+            })
+        })
+        .catch((err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'An error occurred, please try again',
+              confirmButtonColor: '#221daf',
+            })
+        });
+  };
+
   const { title, description, userId } = deck || {};
 
   return (
@@ -114,6 +137,10 @@ const PracticeDeck = () => {
                       <p className="">{description}</p>
                     </div>
                   </div>
+                  {
+                    localId != userId &&
+                    <button className="btn btn-white" onClick={handleAddToMyCollection}>Add to My Collection</button>
+                  }
                   {
                     localId === userId &&
                     <Link to={`/deck/${id}/update`}>
