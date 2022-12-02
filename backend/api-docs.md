@@ -44,6 +44,26 @@ Update Single Deck
 
 payload: { localId: “string”, title: “string”, description: “string”, visibility: “string” }
 
+Invite Another User to a Private Deck
+> POST /deck/invite/{id}
+> 
+payload: { email: "string" }
+
+Add a Public Deck to My Collection
+> POST /deck/{id}/add-to-my-collection
+>
+
+Save Study Progress of a Deck 
+> POST /deck/progress/{id}
+> 
+payload: { userId: "string", currentIndex: number }
+
+
+Get Study Progress of a Deck 
+> GET /deck/progress/{id}
+>
+
+
 Delete Single Deck
 
 > DELETE /deck/{id}

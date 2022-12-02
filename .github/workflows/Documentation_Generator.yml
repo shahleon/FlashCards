@@ -18,8 +18,8 @@ jobs:
             - run: chmod u+x backend/Documentation
             - run: sphinx-build -b html backend backend/Documentation
             - run: git add -A
-            - run: git config --global user.email "aadiasba@ncsu.edu"
-            - run: git config --global user.name "Aaron Dias Barreto"
+            - run: git config --global user.email "leon.it.ju@gmail.com"
+            - run: git config --global user.name "Shahnewaz Leon"
             - run: git commit -m "Doco Auto Generated" -a | exit 0
             - name: Push Changes
               uses: ad-m/github-push-action@master

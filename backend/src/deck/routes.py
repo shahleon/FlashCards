@@ -161,6 +161,8 @@ def create():
 @deck_bp.route('/deck/invite/<id>', methods = ['POST'])
 @cross_origin(supports_credentials=True)
 def invite(id):
+    '''This method is called when we want to invite another user to a private Deck. The existence of the invited user is
+    checked in the database and if present access is given to the invited user to the private Deck'''
     try:
         data = request.get_json()
         invitee = data['email']
@@ -195,6 +197,9 @@ def invite(id):
 @deck_bp.route('/deck/<deck_id>/add-to-my-collection', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def add_deck_to_collection(deck_id):
+    '''This method is used to add a Public Deck created by some other user to our own Collection for easy access. A new
+    copy of the public Deck is created with all the cards and visibility is set to Private, so the user is free to make
+    any changes necessary.'''
     try:
         data = request.get_json()
         localId = data['localId']
@@ -231,6 +236,8 @@ def add_deck_to_collection(deck_id):
 @deck_bp.route('/deck/progress/<deck_id>', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def save_progress(deck_id):
+    '''This method is used to save the study progress for a Deck for the currently logged in user. The user will be able
+    to check his progress for any particular Deck from the Dashboard page for a quick overview of their progress'''
     try:
         data = request.get_json()
         user_id = data['userId']
@@ -256,6 +263,8 @@ def save_progress(deck_id):
 @deck_bp.route('/deck/progress/<deck_id>', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def get_progress(deck_id):
+    '''This method is used to get the study progress for a Deck for the currently logged in user. The user will be able
+    to check his progress for any particular Deck from the Dashboard page for a quick overview of their progress'''
     args = request.args
     user_id = args and args['localId']
     try:
