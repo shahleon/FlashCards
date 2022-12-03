@@ -44,8 +44,9 @@ const Login = () => {
     await http
       .post("/login", payload)
       .then((res) => {
-        const { user } = res.data || {}
+        const { user, daily_streak } = res.data || {}
         window.localStorage.setItem('flashCardUser', JSON.stringify(user))
+        window.localStorage.setItem('dailyStreak', daily_streak)
         Swal.fire({
           icon: 'success',
           title: 'Login Successful!',

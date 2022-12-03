@@ -21,7 +21,10 @@
 #SOFTWARE.
 
 '''import dependancies'''
-from flask import Blueprint, jsonify               
+import datetime
+from datetime import date
+
+from flask import Blueprint, jsonify
 from flask import current_app as app
 from flask_cors import cross_origin
 from flask import request
@@ -70,7 +73,7 @@ def signup():
 
 @auth_bp.route('/login', methods=['POST'])
 @cross_origin(supports_credentials=True)
-def login():                                        
+def login():
     '''this method is used by registered users to sign in to their account'''
     try:
         data = request.get_json()
@@ -78,16 +81,50 @@ def login():
         password = data['password']                   
         
         user = auth.sign_in_with_email_and_password(email, password)
+
+        user_id = user["localId"]
+        user_daily_streaks = db.child("user_daily_streaks") \
+            .order_by_child("userId").equal_to(user_id).get()
+
+        daily_streak = None
+        for daily_streak in user_daily_streaks.each():
+            current_progress = daily_streak.val()
+            if current_progress["userId"] == user_id:
+                key = daily_streak.key()
+                daily_streak = current_progress
+                daily_streak["id"] = key
+                break
+
+        current_streak_count = 1
+        yesterday = date.today() - datetime.timedelta(days=1)
+        if daily_streak and daily_streak["lastLoginDate"] == yesterday.strftime('%Y-%m-%d'):
+            print("2")
+            current_streak_count = daily_streak["currentStreakCount"] + 1
+
+        elif daily_streak and daily_streak["lastLoginDate"] == date.today().strftime('%Y-%m-%d'):
+            print("3")
+            current_streak_count = daily_streak["currentStreakCount"]
+
+        if daily_streak:
+            db.child("user_daily_streaks").child(daily_streak["id"]).remove()
+
+        db.child("user_daily_streaks").push({
+            "userId": user_id, "lastLoginDate": date.today().strftime('%Y-%m-%d'),
+            "currentStreakCount": current_streak_count
+        })
+
         '''if login is successful, this message is displayed'''
+        '''daily_streak = current_streak_count,'''
         return jsonify(
             user = user,
+            daily_streak = current_streak_count,
             message = 'Login Successful',           
             status = 200
         ), 200
-    except:
+    except Exception as e:
         '''if login is not successful, this message is displayed'''
         return jsonify(
-            message = 'Login Failed',               
+            message = f"An error occurred {e}",
             status = 400
         ), 400
 

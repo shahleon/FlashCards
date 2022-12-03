@@ -52,7 +52,8 @@ const Dashboard = () => {
   const {Search} = Input;
 
   const flashCardUser = window.localStorage.getItem("flashCardUser");
-  const {localId} = (flashCardUser && JSON.parse(flashCardUser)) || {};
+  const dailyStreak = window.localStorage.getItem("dailyStreak");
+  const { localId } = (flashCardUser && JSON.parse(flashCardUser)) || {};
 
   useEffect(() => {
     fetchDecks();
@@ -147,6 +148,9 @@ const Dashboard = () => {
                 <Card className="welcome-card border-[#E7EAED]">
                   <div className="flex justify-between items-center">
                     <div>
+                      <h2>
+                        You're on a {dailyStreak} day streak 🔥
+                      </h2>
                       <h3>
                         <b>Hey, Welcome Back!</b> 👋
                       </h3>
