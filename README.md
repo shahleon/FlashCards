@@ -102,19 +102,24 @@ Please refer to the [Contributing.md](https://github.com/JohnDamilola/FlashCards
 ## Help
 
 Email any queries to the contributors -
-1. [Swarangi Gaurkar](sgaurka@ncsu.edu)
-2. [Kritika Javali](ksjavali@ncsu.edu)
-3. [John Damilola](djbabalo@ncsu.edu)
-4. [Aaron Dias Barreto](aadiasba@ncsu.edu)
-5. [Leo Hsiang](yhsiang@ncsu.edu)
+* [Shahnewaz Leon](sleon3@ncsu.edu)
+* [Dong Li](dli35@ncsu.edu)
+* [Cheng-Yun Kuo](ckuo3@ncsu.edu)
+* [Drew Commings](docummin@ncsu.edu)
+* [Janet Brock](jdbrock@ncsu.edu)
 
 ## Authors 
 
-1. [Kritika Javali](https://github.com/ksjavali)
-2. [Swarangi Gaurkar](https://github.com/Swarangigaurkar)
-3. [Aaron Dias Barreto](https://github.com/aaron278)
-4. [Leo Hsiang](https://github.com/leoohsiang)
-5. [Damilola Babalola](https://github.com/JohnDamilola)
+* [Shahnewaz Leon](https://github.com/shahleon)
+* [Dong Li](https://github.com/StoicLD)
+* [Cheng-Yun Kuo](https://github.com/kuochengyun)
+* [Drew Commings](https://github.com/Drew-Cummings)
+* [Janet Brock]([jdbrock@ncsu.edu](https://github.com/janet743))
+* [Kritika Javali](https://github.com/ksjavali)
+* [Swarangi Gaurkar](https://github.com/Swarangigaurkar)
+* [Aaron Dias Barreto](https://github.com/aaron278)
+* [Leo Hsiang](https://github.com/leoohsiang)
+* [Damilola Babalola](https://github.com/JohnDamilola)
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
