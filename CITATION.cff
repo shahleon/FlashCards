@@ -3,7 +3,7 @@ message: "If the code for this repository is used, please cite it as below"
 authors:
 - family-names: "Brock"
   given-names: "Janet"
- - family-names: "Cummings"
+- family-names: "Cummings"
   given-names: "Drew"
 - family-names: "Li"
   given-names: "Dong"
