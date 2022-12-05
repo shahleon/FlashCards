@@ -109,7 +109,7 @@ Email any queries to the contributors -
 * [Shahnewaz Leon](sleon3@ncsu.edu)
 * [Dong Li](dli35@ncsu.edu)
 * [Cheng-Yun Kuo](ckuo3@ncsu.edu)
-* [Drew Commings](docummin@ncsu.edu)
+* [Drew Cummings](docummin@ncsu.edu)
 * [Janet Brock](jdbrock@ncsu.edu)
 
 ## Authors 
@@ -117,7 +117,7 @@ Email any queries to the contributors -
 * [Shahnewaz Leon](https://github.com/shahleon)
 * [Dong Li](https://github.com/StoicLD)
 * [Cheng-Yun Kuo](https://github.com/kuochengyun)
-* [Drew Commings](https://github.com/Drew-Cummings)
+* [Drew Cummings](https://github.com/Drew-Cummings)
 * [Janet Brock](https://github.com/janet743)
 * [Kritika Javali](https://github.com/ksjavali)
 * [Swarangi Gaurkar](https://github.com/Swarangigaurkar)
