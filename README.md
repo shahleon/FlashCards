@@ -76,7 +76,7 @@ https://user-images.githubusercontent.com/17693596/194787705-309ebf62-2a3d-4075-
   />
 </p>
 
-## Future Roadmap [See here](https://github.com/users/JohnDamilola/projects/1)
+## Future Roadmap
 ### Phase 1:
 - [x] Create database ER diagram
 - [x] User Login
