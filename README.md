@@ -42,9 +42,6 @@ FlashCards is a spaced repetition learning platform to <b>create</b>, <b>memoriz
 2. Practice mode
 
 ## Watch Flashcards in Action
-https://user-images.githubusercontent.com/17693596/194787705-309ebf62-2a3d-4075-94b4-6da814a953a8.mp4
-
-https://youtu.be/tgp4uLDPOSE
 [![Watch the video](https://img.youtube.com/vi/tgp4uLDPOSE/hqdefault.jpg)](https://youtu.be/tgp4uLDPOSE)
 
 ## Tech Stack
