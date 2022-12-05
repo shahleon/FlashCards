@@ -84,11 +84,13 @@ def getdecks():
             for shared_deck in shared_decks.each():
                 shared_deck = shared_deck.val()
                 deck = db.child("deck").child(shared_deck["deckId"]).get()
+                if deck.val() is None:
+                    continue
                 deck_id = deck.key()
                 deck = deck.val()
                 deck['id'] = deck_id
                 deck['is_owner'] = False
-                deck_progress = get_deck_progress(deck.key(), localId)
+                deck_progress = get_deck_progress(deck_id, localId)
                 deck['progress'] = 0
                 if deck_progress is not None:
                     deck['progress'] = int(100*int(deck_progress['currentIndex'])/int(deck['cards_count']))
@@ -288,10 +290,9 @@ def get_deck_progress(deck_id, user_id):
 
         deck_progress = None
         for deck_progress in deck_progress_list.each():
-            current_progress = deck_progress.val()
-            if current_progress["userId"] == user_id:
-                key = deck_progress.key()
-                deck_progress = current_progress
+            key = deck_progress.key()
+            deck_progress = deck_progress.val()
+            if deck_progress["userId"] == user_id:
                 deck_progress["id"] = key
                 break
 
