@@ -89,11 +89,15 @@ https://user-images.githubusercontent.com/17693596/194787705-309ebf62-2a3d-4075-
 - [x] Setup backend and frontend deployment
 
 ### Phase 2:
+- [x] Track practice/study progress
+- [x] Tag/Categorize Cards in a deck
+- [x] Daily learning streaks stats
+- [x] Invite friends to a private Study Deck
+- [x] Add pagination to speed up loading
+- [x] Change how card count is calculated to speef up loading
+
+### Phase 3:
 - [ ] Delete User Account
-- [ ] Track practice/study progress
-- [ ] Tag/Categorize Cards in a deck
-- [ ] Daily learning streaks stats
-- [ ] Invite friends to a private Study Deck
 - [ ] Chrome extension to be able to highlight a text on a website or online pdf and have an extension option from the right click to help me create/add a card to my deck on the spot.
 
 ## Contributions to the Project
