@@ -114,7 +114,7 @@ Email any queries to the contributors -
 * [Dong Li](https://github.com/StoicLD)
 * [Cheng-Yun Kuo](https://github.com/kuochengyun)
 * [Drew Commings](https://github.com/Drew-Cummings)
-* [Janet Brock]([jdbrock@ncsu.edu](https://github.com/janet743))
+* [Janet Brock]((https://github.com/janet743))
 * [Kritika Javali](https://github.com/ksjavali)
 * [Swarangi Gaurkar](https://github.com/Swarangigaurkar)
 * [Aaron Dias Barreto](https://github.com/aaron278)
