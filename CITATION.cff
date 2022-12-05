@@ -1,6 +1,16 @@
 cff-version: 1.2.0
 message: "If the code for this repository is used, please cite it as below"
 authors:
+- family-names: "Brock"
+  given-names: "Janet"
+ - family-names: "Cummings"
+  given-names: "Drew"
+- family-names: "Li"
+  given-names: "Dong"
+- family-names: "Shahnewaz"
+  given-names: "Leon"
+- family-names: "Kuo"
+  given-names: "Cheng-Yun"
 - family-names: "Javali"
   given-names: "Kritika"
 - family-names: "Gaurkar"
