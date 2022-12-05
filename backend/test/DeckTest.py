@@ -60,11 +60,6 @@ class DeckTestApp(unittest.TestCase):
             response=self.app.delete('deck/delete/Test')
             assert response.status_code==200
 
-    def test_create_deck_with_tag_route(self):
-        '''Test the create deck route of our app'''
-        response=self.app.post('/deck/create',json=dict(localId='Test',title='TestDeck',description='This is a test deck with tag',visibility='public', tags=["tag1", "tag2"]))
-        assert response.status_code==201
-
 
 if __name__=="__main__":
     unittest.main()
