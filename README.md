@@ -36,7 +36,7 @@
 ## Description
 Are you a student and having trouble preparing for tests and exams? Look no further, FlashCards can help you memorize all that hard-to-remember information with online flashcards so that you ace your exams!
 
-FlashCards is a spaced repetition learning platform to <b>create</b>, <b>memorize</b> and <b>share</b> your knowledge list using flashcards.
+FlashCards is a spaced repetition learning platform to <b>create</b>, <b>memorize</b> and <b>share</b> your knowledge using flashcards.
 
 In FlashCards you can:
 1. Create and customize your own decks of flash cards
