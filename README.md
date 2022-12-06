@@ -48,7 +48,7 @@ In FlashCards you can:
 7. Keep track of your daily login streak
 
 ## Watch Flashcards in Action
-[![Watch the video](https://img.youtube.com/vi/tgp4uLDPOSE/hqdefault.jpg)](https://youtu.be/tgp4uLDPOSE)
+[![Watch the video](https://img.youtube.com/vi/xMb2vX3QGTE/hqdefault.jpg)](https://youtu.be/xMb2vX3QGTE)
 
 ## Tech Stack
 <a href="https://flask.palletsprojects.com/en/2.2.x/"><img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" /></a>
