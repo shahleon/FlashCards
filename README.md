@@ -74,6 +74,13 @@ In FlashCards you can:
     src="./frontend/src/assets/images/1.png"
     alt="Demo Screens 1"
   />
+  
+  
+  <img
+    width="100%"
+    src="./frontend/src/assets/images/2.png"
+    alt="Demo Screens 2"
+  />
 </p>
 
 ## Future Roadmap
