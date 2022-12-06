@@ -39,8 +39,8 @@ Are you a student and having trouble preparing for tests and exams? Look no furt
 FlashCards is a spaced repetition learning platform to <b>create</b>, <b>memorize</b> and <b>share</b> your knowledge list using flashcards.
 
 In FlashCards you can:
-1. Create and customize your own deck of cards
-2. Share you deck with friends or classmates
+1. Create and customize your own decks of flash cards
+2. Share your decks with friends or classmates
 3. Add searchable tags to your decks
 4. Explore public decks uploaded by other users on the explore page
 5. Add public decks to your own dashboard
