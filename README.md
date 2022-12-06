@@ -63,10 +63,6 @@ In FlashCards you can:
 - Backend [See README.md](https://github.com/JohnDamilola/FlashCards/blob/main/backend/Readme.md)
 - Frontend [See README.md](https://github.com/JohnDamilola/FlashCards/blob/main/frontend/README.md)
 
-## Demo Links
-- Backend API Endpoint URL: https://flashcards-server-api.herokuapp.com/ [Docs](https://github.com/JohnDamilola/FlashCards/blob/main/backend/api-docs.md)
-- Frontend: https://flashcards-519da.web.app/
-
 ## Current Screens
 <p>
   <img
@@ -101,7 +97,8 @@ In FlashCards you can:
 - [x] Daily learning streaks stats
 - [x] Invite friends to a private Study Deck
 - [x] Add pagination to speed up loading
-- [x] Change how card count is calculated to speef up loading
+- [x] Change how card count is calculated to speed up loading
+- [x] Can add public decks to your personal dashboard
 
 ### Phase 3:
 - [ ] Delete User Account
